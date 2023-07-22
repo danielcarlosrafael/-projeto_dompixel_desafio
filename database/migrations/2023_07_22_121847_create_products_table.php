@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->required();
             $table->longText('description')->nullable();
-            $table->float('price')->required();
+            $table->double('price', 12, 2)->required();
             $table->integer('quantity')->required();
             $table->timestamps();
         });

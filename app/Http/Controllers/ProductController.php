@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse as RedirectResponseAlias;
 use Illuminate\Http\Request;
@@ -10,6 +11,19 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    /**
+     * @var ProductRepository
+     */
+    public ProductRepository $repository;
+
+    /**
+     * Construct Function
+     */
+    public function __construct()
+    {
+        $this->repository = new ProductRepository();
+    }
+
     /**
      * @return View
      */
@@ -33,7 +47,7 @@ class ProductController extends Controller
      */
     public function store(Request $request): RedirectResponseAlias
     {
-        $data = $request->all();
+        $data = $this->repository->sanitizeDataValues($request->all());
         DB::beginTransaction();
         try {
             Product::create($data);
@@ -66,7 +80,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id): RedirectResponseAlias
     {
-        $data = $request->all();
+        $data = $this->repository->sanitizeDataValues($request->all());
         DB::beginTransaction();
         try {
             $item = Product::findOrFail($id);
@@ -99,4 +113,5 @@ class ProductController extends Controller
 
         return redirect()->route("products.index")->with('success', 'Produto excluido com sucesso!');
     }
+
 }

@@ -22,7 +22,7 @@ Siga os passos abaixo para configurar o projeto em seu ambiente de desenvolvimen
 - Copie o arquivo de exemplo de configuração do ambiente: cp .env.example .env
 - Crie uma nova chave de aplicação: php artisan key:generate
 - Configure o arquivo .env com as informações do seu banco de dados
-- Crie as tabelas no banco de dados: php artisan migrate
+- Crie as tabelas no banco de dados: php artisan migrate e popule com php artisan db:seed
 
 
 

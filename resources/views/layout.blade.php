@@ -17,23 +17,50 @@
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+    <style>
+        .hide-animation {
+            animation: fadeOut 5s ease;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
         @if ($message = Session::get('success'))
-            <div class="alert alert-success alert-bold fade show kt-margin-t-20 kt-margin-b-40" role="alert">
+            <div id="divAlert" class="alert alert-success alert-bold fade show kt-margin-t-20 kt-margin-b-40" role="alert">
                 <div class="alert-text"><i class="fa fa-exclamation-triangle"></i> {{ $message }}</div>
             </div>
         @endif
 
 
         @if ($message = Session::get('error'))
-            <div class="alert alert-danger alert-bold fade show kt-margin-t-20 kt-margin-b-40" role="alert">
+            <div id="divAlert" class="alert alert-danger alert-bold fade show kt-margin-t-20 kt-margin-b-40" role="alert">
                 <div class="alert-text"><i class="fa fa-exclamation-triangle"></i> {{ $message }}</div>
             </div>
         @endif
 
         @yield('content')
+
+        <script>
+            function hideDivWithAnimation() {
+                $('#divAlert').addClass('hide-animation');
+                setTimeout(function() {
+                    $('#divAlert').remove();
+                }, 5000);
+            }
+
+            $(document).ready(function() {
+                hideDivWithAnimation();
+            });
+        </script>
     </div>
 </body>
 </html>
